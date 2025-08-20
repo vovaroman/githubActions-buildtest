@@ -1,14 +1,12 @@
-import sys
-import os
-
+import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import app
-
+# Import the Flask instance, not the module
+from app import app as flask_app
 
 def test_home():
-    pass
-    with app.test_client() as client:
-        response = client.get("/")
-        assert response.status_code == 200
-        assert response.data == b"Hello, DevOps!"
+    with flask_app.test_client() as client:
+        resp = client.get("/")
+        assert resp.status_code == 200
+        assert resp.data == b"Hello, DevOps!"
+=
