@@ -1,0 +1,29 @@
+name: Build a Microservice
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install pytest (required to run pytest action)
+        run: pip install pytest pytest-md pytest-emoji
+
+      - name: Run pytest
+        run: pytest
+
+      - name: Build Docker image
+        run: docker build -t flask-microservice .
+
+      #- name: Run tests inside container
+      #  run: docker run --rm flask-microservice
